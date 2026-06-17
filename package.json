@@ -1,0 +1,32 @@
+{
+  "name": "nutrioptima-analytics",
+  "version": "1.0.0",
+  "description": "AI-based nutrition management system",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "build": "cd client && npm run build && cd ../server && npm run build",
+    "start": "cd server && npm start",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm test",
+    "test:server": "cd server && npm test",
+    "setup": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": [
+    "nutrition",
+    "ai",
+    "health",
+    "food-tracking"
+  ],
+  "author": "NutriOptima Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.4",
+    "mongoose": "^9.2.1"
+  }
+}

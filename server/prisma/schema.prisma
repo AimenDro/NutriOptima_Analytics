@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int       @id @default(autoincrement())
+  email              String    @unique
+  passwordHash       String    @map("password_hash")
+  age                Int?
+  gender             String?
+  heightCm           Float?    @map("height_cm")
+  weightKg           Float?    @map("weight_kg")
+  activityLevel      String?   @map("activity_level")
+  dietaryPreferences String?   @map("dietary_preferences") // JSON string
+  allergies          String?   // JSON string
+  healthGoals        String?   @map("health_goals") // JSON string
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  foodLogs           FoodLog[]
+  userGoals          UserGoal?
+
+  @@map("users")
+}
+
+model FoodLog {
+  id                Int      @id @default(autoincrement())
+  userId            Int      @map("user_id")
+  imageUrl          String?  @map("image_url")
+  identifiedFoods   String?  @map("identified_foods") // JSON string
+  totalCalories     Float?   @map("total_calories")
+  macronutrients    String?  // JSON string
+  micronutrients    String?  // JSON string
+  portionEstimates  String?  @map("portion_estimates") // JSON string
+  confidenceScores  String?  @map("confidence_scores") // JSON string
+  loggedAt          DateTime @default(now()) @map("logged_at")
+  
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("food_logs")
+}
+
+model FoodDatabase {
+  id              Int      @id @default(autoincrement())
+  foodName        String   @map("food_name")
+  category        String?
+  caloriesPer100g Float    @map("calories_per_100g")
+  carbsPer100g    Float    @map("carbs_per_100g")
+  proteinPer100g  Float    @map("protein_per_100g")
+  fatPer100g      Float    @map("fat_per_100g")
+  vitamins        String?  // JSON string
+  minerals        String?  // JSON string
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("food_database")
+}
+
+model UserGoal {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique @map("user_id")
+  dailyCalories   Int?     @map("daily_calories")
+  dailyCarbs      Float?   @map("daily_carbs")
+  dailyProtein    Float?   @map("daily_protein")
+  dailyFat        Float?   @map("daily_fat")
+  targetVitamins  String?  @map("target_vitamins") // JSON string
+  targetMinerals  String?  @map("target_minerals") // JSON string
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_goals")
+}

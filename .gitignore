@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables — NEVER commit these
+.env
+server/.env
+client/.env
+.env.local
+.env.production
+
+# ML Model files (too large for GitHub)
+*.h5
+*.pkl
+*.model
+efficientnet_fruits360.h5
+
+# Python cache
+__pycache__/
+server/__pycache__/
+server/ml/__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Uploaded files
+server/uploads/*.jpg
+server/uploads/*.jpeg
+server/uploads/*.png
+server/uploads/*.webp
+server/uploads/*.jfif
+server/uploads/food-data/
+
+# Build output
+client/dist/
+client/build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/settings.json
+.idea/
+
+# Temp/test files
+check_admin_users.js
+check_user_data.js
+simple_db_test.js
+test_content_moderation.js
+test_database_operations.js
+view_database_data.js
